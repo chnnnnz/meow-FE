@@ -1,0 +1,327 @@
+query activeCustomer {
+  activeCustomer {
+    id
+    firstName
+    phoneNumber
+    emailAddress
+  }
+}
+
+query simpleCollections {
+  collections {
+    items {
+      ...SimpleCollection
+      children {
+        ...SimpleCollection
+        children {
+          ...SimpleCollection
+          children {
+            ...SimpleCollection
+          }
+        }
+      }
+    }
+  }
+}
+
+query checkEmailExist($email: String!) {
+  checkEmailExist(emailAddress: $email) {
+    success
+  }
+}
+
+query product($id: ID!) {
+  product(id: $id) {
+    ...ProductDetail
+  }
+}
+
+fragment ProductDetail on Product {
+  id
+  name
+  description
+  customFields {
+    shortDescription
+    originalPrice
+  }
+  featuredAsset {
+    preview
+  }
+  assets {
+    __typename
+    preview
+  }
+  variants {
+    id
+    name
+    stockLevel
+    options {
+      id
+      groupId
+    }
+    priceWithTax
+  }
+  optionGroups {
+    id
+    name
+    options {
+      id
+      name
+    }
+  }
+  facetValues {
+    ...SimpleFacetValue
+  }
+}
+
+query searchProducts($collectionId: ID, $sort: SearchResultSortParameter, $term: String, $take: Int, $skip: Int) {
+  search(input: { collectionId: $collectionId, sort: $sort, term: $term, take: $take, skip: $skip, groupByProduct: true }) {
+    items {
+      ...SearchResultProduct
+    }
+    totalItems
+    facetValues {
+      facetValue {
+        ...SimpleFacetValue
+      }
+    }
+  }
+}
+
+query activeOrder {
+  activeOrder {
+    lines {
+      ...CartOrderLine
+    }
+    shippingWithTax
+    shippingLines {
+      shippingMethod {
+        id
+        calculator {
+          args {
+            name
+            value
+          }
+        }
+      }
+      priceWithTax
+    }
+  }
+}
+
+query eligibleShippingMethods {
+  eligibleShippingMethods {
+    id
+    priceWithTax
+    metadata
+  }
+}
+
+query myCoupons {
+  myCoupons {
+    createdAt
+    expiresAt
+    state
+    couponTemplate {
+      name
+      value
+    }
+    code
+  }
+}
+
+fragment CartOrderLine on OrderLine {
+  id
+  productVariant {
+    id
+    product {
+      id
+      customFields {
+        originalPrice
+      }
+      name
+      facetValues {
+        ...SimpleFacetValue
+      }
+    }
+    name
+    options {
+      name
+    }
+    stockLevel
+    priceWithTax
+  }
+  featuredAsset {
+    preview
+  }
+  unitPriceWithTax
+  quantity
+}
+
+fragment SimpleCollection on Collection {
+  id
+  name
+  parentId
+  breadcrumbs {
+    id
+    name
+  }
+}
+
+fragment SearchResultProduct on SearchResult {
+  productId
+  productName
+  productAsset {
+    preview
+  }
+  priceWithTax {
+    ... on PriceRange {
+      min
+      max
+    }
+  }
+  originalPrice
+  facetValueIds
+  description
+  inStock
+  isLike
+}
+
+fragment SimpleFacetValue on FacetValue {
+  id
+  facet {
+    code
+  }
+  name
+  code
+}
+
+mutation kakaoAuthenticate($code: String!) {
+  authenticate(input: { kakao: { code: $code } }) {
+    ... on CurrentUser {
+      id
+      identifier
+    }
+  }
+}
+
+mutation naverAuthenticate($token: String!) {
+  authenticate(input: { naver: { token: $token } }) {
+    ... on CurrentUser {
+      id
+      identifier
+    }
+  }
+}
+
+mutation requestPhoneAuthNumber($number: String!) {
+  generatePhoneAuthNumber(phone_number: $number) {
+    success
+  }
+}
+
+mutation verifyPhoneAuthNumber($number: String!, $code: String!) {
+  checkPhoneAuthNumber(phone_number: $number, auth_number: $code) {
+    success
+  }
+}
+
+mutation registerCustomer($input: MeowtimesRegisterCustomerInput!) {
+  meowtimesRegisterCustomerAccount(input: $input) {
+    ... on Success {
+      success
+    }
+    ... on CustomerCreateError {
+      errorCode
+      message
+    }
+  }
+}
+
+mutation login($username: String!, $password: String!, $rememberMe: Boolean! = false) {
+  login(username: $username, password: $password, rememberMe: $rememberMe) {
+    ... on CurrentUser {
+      id
+      identifier
+    }
+    ... on ErrorResult {
+      errorCode
+      message
+    }
+  }
+}
+
+mutation likeProduct($productId: ID!, $like: Boolean!) {
+  setLikeProduct(productId: $productId, like: $like) {
+    success
+  }
+}
+
+mutation addItemToOrder($productVariantId: ID!, $quantity: Int!) {
+  addItemToOrder(productVariantId: $productVariantId, quantity: $quantity) {
+    ... on Order {
+      id
+      lines {
+        ...CartOrderLine
+      }
+    }
+  }
+}
+
+mutation addItemsToOrder($input: AddItemsToOrderInput!) {
+  addItemsToOrder(input: $input) {
+    ... on Order {
+      id
+    }
+  }
+}
+
+mutation removeOrderLine($orderLineId: ID!) {
+  removeOrderLine(orderLineId: $orderLineId) {
+    ... on Order {
+      id
+      lines {
+        ...CartOrderLine
+      }
+    }
+  }
+}
+
+mutation removeOrderLines($orderLineIds: [ID!]!) {
+  removeOrderLines(orderLineIds: $orderLineIds) {
+    ... on Order {
+      id
+    }
+  }
+}
+
+mutation adjustOrderLine($orderLineId: ID!, $quantity: Int!) {
+  adjustOrderLine(orderLineId: $orderLineId, quantity: $quantity) {
+    ... on Order {
+      id
+      lines {
+        ...CartOrderLine
+      }
+    }
+  }
+}
+
+mutation setOrderShippingMethod($id: [ID!]!) {
+  setOrderShippingMethod(shippingMethodId: $id) {
+    ... on Order {
+      id
+    }
+  }
+}
+
+mutation useCoupon($code: String!) {
+  useCoupon(code: $code) {
+    ... on Success {
+      success
+    }
+    ... on UseCouponError {
+      errorCode
+      message
+    }
+  }
+}

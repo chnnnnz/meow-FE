@@ -1,0 +1,369 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: 'Pretendard';
+        font-weight: 200;
+        src: 
+            url('/fonts/Pretendard-ExtraLight.woff2') format('woff2'),
+            url('/fonts/Pretendard-ExtraLight.woff') format('woff');
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        font-weight: 300;
+        src: 
+            url('/fonts/Pretendard-Light.woff2') format('woff2'),
+            url('/fonts/Pretendard-Light.woff') format('woff');
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        font-weight: 400;
+        src: 
+            url('/fonts/Pretendard-Regular.woff2') format('woff2'),
+            url('/fonts/Pretendard-Regular.woff') format('woff');
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        font-weight: 500;
+        src: 
+            url('/fonts/Pretendard-Medium.woff2') format('woff2'),
+            url('/fonts/Pretendard-Medium.woff') format('woff');
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        font-weight: 600;
+        src: 
+            url('/fonts/Pretendard-SemiBold.woff2') format('woff2'),
+            url('/fonts/Pretendard-SemiBold.woff') format('woff');
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        font-weight: 700;
+        src: 
+            url('/fonts/Pretendard-Bold.woff2') format('woff2'),
+            url('/fonts/Pretendard-Bold.woff') format('woff');
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        font-weight: 800;
+        src: 
+            url('/fonts/Pretendard-ExtraBold.woff2') format('woff2'),
+            url('/fonts/Pretendard-ExtraBold.woff') format('woff');
+    }
+    html {
+        font-family: 'Pretendard', ui-sans-serif, system-ui, -apple-system;
+        font-size: 14px;
+    }
+}
+
+@layer utilities {
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+    input:focus ~ label,
+    input:not(:placeholder-shown) ~ label {
+        @apply -translate-y-2 text-xsmall-regular;
+    }
+
+    input:focus ~ label {
+        @apply left-0;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+        border: 1px solid #212121;
+        -webkit-text-fill-color: #212121;
+        -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    input[type="search"]::-webkit-search-decoration,
+    input[type="search"]::-webkit-search-cancel-button,
+    input[type="search"]::-webkit-search-results-button,
+    input[type="search"]::-webkit-search-results-decoration {
+        -webkit-appearance: none;
+    }
+}
+
+@layer components {
+    .my-calender.react-datepicker {
+        @apply w-full border-none rounded-none;
+
+        & .react-datepicker__triangle { @apply hidden; }
+
+        & .react-datepicker__month-container {
+            @apply w-full float-none;
+            & .react-datepicker__header {
+                @apply border-none bg-white rounded-none p-0;
+                & .my-calender-header {
+                    @apply mb-[8px] laptop:mb-[12px] flex items-center justify-between laptop:justify-center relative text-center;
+                    & p { @apply text-lg laptop:title-SB-17-150 text-gray-09; }
+                    & button { @apply mx-[10px] laptop:mx-[16px] w-[24px] h-[24px] inline-flex justify-center items-center; }
+                    & button i { @apply block text-[16px] text-gray-06; }
+                }
+                & .react-datepicker__day-names {
+                    @apply bg-gray-01 mb-0 py-[8px] laptop:py-[9px] px-[10px];
+                    & .react-datepicker__day-name {
+                        @apply ml-[4px] laptop:ml-[14px] body-M-14-150 text-gray-06 w-[calc(100%/7)] max-w-[44px] m-0;
+                    }
+                    & .react-datepicker__day-name:first-child {
+                        @apply ml-0;
+                    }
+                }
+            }
+            & .react-datepicker__month {
+                @apply m-0;
+                & .react-datepicker__week {
+                    @apply mx-[10px];
+                    & .react-datepicker__day {
+                        @apply m-0 ml-[4px] laptop:ml-[14px] title-M-17-150 text-gray-09 w-[calc(100%/7)] max-w-[44px] h-[44px] inline-flex justify-center items-center rounded-[50%] leading-none;
+                    }
+                    & .react-datepicker__day:first-child {
+                        @apply ml-0;
+                    }
+                    & .react-datepicker__day:hover {
+                        @apply rounded-[50%] bg-transparent;
+                    }
+                    & .react-datepicker__day.react-datepicker__day--selected {
+                        @apply border border-green-05 bg-green-01 text-green-03;
+                    }
+                    & .react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected, .react-datepicker__quarter-text--keyboard-selected, .react-datepicker__year-text--keyboard-selected {
+                        @apply bg-transparent;
+                    }
+                    & .react-datepicker__day--outside-month {
+                        @apply opacity-0
+                    }
+                }
+            }
+
+        }
+    }
+
+    .content-container {
+        @apply max-w-[1440px] w-full mx-auto px-4;
+    }
+
+    .contrast-btn {
+        @apply px-4 py-2 border border-black rounded-full hover:bg-black hover:text-white duration-200 ease-in;
+    }
+
+    .text-xsmall-regular {
+        @apply text-[10px] leading-4 font-normal;
+    }
+
+    .text-small-regular {
+        @apply text-xs leading-5 font-normal;
+    }
+
+    .text-small-semi {
+        @apply text-xs leading-5 font-semibold;
+    }
+
+    .text-base-regular {
+        @apply text-sm leading-6 font-normal;
+    }
+
+    .text-base-semi {
+        @apply text-sm leading-6 font-semibold;
+    }
+
+    .text-large-regular {
+        @apply text-base leading-6 font-normal;
+    }
+
+    .text-large-semi {
+        @apply text-base leading-6 font-semibold;
+    }
+
+    .text-xl-regular {
+        @apply text-2xl leading-[36px] font-normal;
+    }
+
+    .text-xl-semi {
+        @apply text-2xl leading-[36px] font-semibold;
+    }
+
+    .text-2xl-regular {
+        @apply text-[30px] leading-[48px] font-normal;
+    }
+
+    .text-2xl-semi {
+        @apply text-[30px] leading-[48px] font-semibold;
+    }
+
+    .text-3xl-regular {
+        @apply text-[32px] leading-[44px] font-normal;
+    }
+
+    .text-3xl-semi {
+        @apply text-[32px] leading-[44px] font-semibold;
+    }
+
+    /* PC 폰트 */
+    .head-EB-50-130 {
+        @apply text-[50px] leading-[65px] font-[800]
+    }
+    .head-B-46-130 {
+        @apply text-[46px] leading-[59.8px] font-[700]
+    }
+    .head-B-40-130 {
+        @apply text-[40px] leading-[52px] font-[700]
+    }
+    .head-B-36-130 {
+        @apply text-[36px] leading-[46.8px] font-[700]
+    }
+    
+    .sub-head-B-24-130 {
+        @apply text-[24px] leading-[31.2px] font-[700]
+    }
+    .sub-head-SB-24-130 {
+        @apply text-[24px] leading-[31.2px] font-[600]
+    }
+    .sub-head-M-24-130 {
+        @apply text-[24px] leading-[31.2px] font-[500]
+    }
+    .sub-head-B-22-130 {
+        @apply text-[22px] leading-[28.6px] font-[700]
+    }
+    .sub-head-M-22-130 {
+        @apply text-[22px] leading-[28.6px] font-[500]
+    }
+    .sub-head-RG-22-170 {
+        @apply text-[22px] leading-[37.4px] font-[400]
+    }
+    .sub-head-EB-20-130 {
+        @apply text-[20px] leading-[26px] font-[800]
+    }
+    .sub-head-B-20-130 {
+        @apply text-[20px] leading-[26px] font-[700]
+    }
+    .sub-head-SB-20-150 {
+        @apply text-[20px] leading-[30px] font-[600]
+    }
+    .sub-head-RG-20-150 {
+        @apply text-[20px] leading-[30px] font-[400]
+    }
+
+    .title-B-18-150 {
+        @apply text-[18px] leading-[27px] font-[700]
+    }
+    .title-SB-18-100 {
+        @apply text-[18px] leading-[18px] font-[600]
+    }
+    .title-RG-18-150 {
+        @apply text-[18px] leading-[27px] font-[400]
+    }
+    .title-B-17-150 {
+        @apply text-[17px] leading-[25.5px] font-[700]
+    }
+    .title-SB-17-150 {
+        @apply text-[17px] leading-[25.5px] font-[600]
+    }
+    .title-M-17-150 {
+        @apply text-[17px] leading-[25.5px] font-[500]
+    }
+    .depth-menu-SB-16-150 {
+        @apply text-[16px] leading-[24px] font-[600]
+    }
+    .depth-menu-M-16-150 {
+        @apply text-[16px] leading-[24px] font-[500]
+    }
+    
+    .body-RG-15-150 {
+        @apply text-[15px] leading-[22.5px] font-[400]
+    }
+    .body-SB-14-150 {
+        @apply text-[14px] leading-[21px] font-[600]
+    }
+    .body-SB-14-130 {
+        @apply text-[14px] leading-[18.2px] font-[700]
+    }
+    .body-M-14-150 {
+        @apply text-[14px] leading-[21px] font-[500]
+    }
+    .body-RG-14-170 {
+        @apply text-[14px] leading-[23.8px] font-[400]
+    }
+    
+    .caption-Lg-14-100 {
+        @apply text-[14px] leading-[14px] font-[400]
+    }
+    .caption-M-13-130 {
+        @apply text-[13px] leading-[16.9px] font-[500]
+    }
+    .caption-SB-12-130 {
+        @apply text-[12px] leading-[15.6px] font-[600]
+    }
+    .caption-M-12-150 {
+        @apply text-[12px] leading-[18px] font-[500]
+    }
+    .caption-RG-12-130 {
+        @apply text-[12px] leading-[15.6px] font-[400]
+    }
+
+    /* MO 폰트 */
+    .head-lg {
+        @apply text-[30px] leading-[36px] font-[700]
+    }
+    .head-md {
+        @apply text-[26px] leading-[33.8px] font-[700]
+    }
+
+    .title-lg {
+        @apply text-[22px] leading-[28.6px] font-[700]
+    }
+    .title-md {
+        @apply text-[20px] leading-[26px] font-[700]
+    }
+    .title-sm {
+        @apply text-[18px] leading-[23.4px] font-[700]
+    }
+    .text-lg {
+        @apply text-[16px] leading-[20.8px] font-[600]
+    }
+    .btn-text-lg {
+        @apply text-[15px] leading-[19.5px] font-[700]
+    }
+    .body-text-lg {
+        @apply text-[14px] leading-[18.2px] font-[700]
+    }
+    .body-text-md {
+        @apply text-[14px] leading-[18.2px] font-[600]
+    }
+    .body-text-sm {
+        @apply text-[14px] leading-[18.2px] font-[500]
+    }
+    
+    .caption-lg {
+        @apply text-[13px] leading-[18.2px] font-[600]
+    }
+    .caption-md {
+        @apply text-[13px] leading-[18.2px] font-[500]
+    }
+    .caption-sm {
+        @apply text-[12px] leading-[16.8px] font-[500]
+    }
+    .caption-ssm {
+        @apply text-[11px] leading-[15.4px] font-[500]
+    }
+}
